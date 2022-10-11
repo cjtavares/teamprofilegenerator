@@ -1,11 +1,10 @@
 const inquirer = require('inquirer');
-const classes = require("./lib/classes");
+const classes = require("./lib/employee");
 const generateHTML = require('./src/generatehtml');
 const fs = require('fs');
 let manager = "";
-let interns = [];
+let team = [];
 let internInfo = "";
-let engineers = [];
 let engineerInfo = "";
 
 function createFile(fileName, data) {
@@ -45,23 +44,19 @@ const intern = () => {inquirer.prompt([
   .then((response) => {switch (response.next) {
     case "Engineer":
         internInfo = new classes.intern(response.name, response.id, response.email, response.school);
-        interns.push(internInfo)
+        team.push(internInfo)
         engineer();
         break;
     case `Intern`: 
         internInfo = new classes.intern(response.name, response.id, response.email, response.school);
-        interns.push(internInfo)
+        team.push(internInfo)
         intern();
         break; 
     case "Team is complete":
         internInfo = new classes.intern(response.name, response.id, response.email, response.school);
-        interns.push(internInfo)
-        const data = generateHTML.generateHTML(manager)
-        console.log(manager);
-        console.log(interns);
-        console.log(engineers);
-        console.log(engineers.name)
-        const file = "index.html";
+        team.push(internInfo)
+        const data = generateHTML.generateHTML(manager, team)
+        const file = "./dist/index.html";
         createFile(file, data);
   }
  
@@ -101,23 +96,19 @@ const intern = () => {inquirer.prompt([
   .then((response) => {switch (response.next) {
     case "Engineer":
         engineerInfo = new classes.engineer(response.name, response.id, response.email, response.github);
-        engineers.push(engineerInfo);
+        team.push(engineerInfo);
         engineer();
         break;
     case `Intern`:
         engineerInfo = new classes.engineer(response.name, response.id, response.email, response.github);
-        engineers.push(engineerInfo);
+        team.push(engineerInfo);
         intern();
         break; 
     case "Team is complete":
         engineerInfo = new classes.engineer(response.name, response.id, response.email, response.github);
-        engineers.push(engineerInfo);
-        const data = generateHTML.generateHTML(manager)
-        console.log(manager);
-        console.log(interns);
-        console.log(engineers);
-        console.log(engineers[0].name)
-        const file = "index.html";
+        team.push(engineerInfo);
+        const data = generateHTML.generateHTML(manager, team)
+        const file = "./dist/index.html";
         createFile(file, data);
   }
  
@@ -165,9 +156,9 @@ const init = () => {inquirer.prompt([
         break; 
     case "Team is complete":
         manager = new classes.managers(response.name, response.id, response.email, response.office);
-        const data = generateHTML.generateHTML(manager)
+        const data = generateHTML.generateHTML(manager, team)
         console.log(manager);
-        const file = "index.html";
+        const file = "./dist/index.html";
         createFile(file, data);
   }
 
