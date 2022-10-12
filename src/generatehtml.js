@@ -2,7 +2,7 @@ let output = "";
 
 const roleOutput = (team) => {
   if(team.role === 'Engineer'){
-    return `<a class="list-group-item" href="https//github.com/${team.github}">Github: ${team.github}</a>`
+    return `<a class="list-group-item" href="https://github.com/${team.github}">Github: ${team.github}</a>`
   } else
   {return `<li class="list-group-item">School: ${team.school}</li>`
   }
